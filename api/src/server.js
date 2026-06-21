@@ -28,6 +28,7 @@ fastify.get("/api/health", async () => ({ ok: true }));
 
 try {
   await fastify.listen({ port: API_PORT, host: "0.0.0.0" });
+  fastify.log.info(`API listening on 0.0.0.0:${API_PORT}`);
 } catch (err) {
   fastify.log.error(err);
   process.exit(1);

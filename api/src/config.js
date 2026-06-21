@@ -12,7 +12,20 @@ for (const envPath of envCandidates) {
 }
 dotenv.config(); // fallback: process.cwd()/.env (Plesk app root)
 
-export const API_PORT = Number(process.env.PORT || process.env.API_PORT) || 3010;
+/** Plesk sets PORT in production — never hard-code 3010 on the server. */
+export const API_PORT = (() => {
+  if (process.env.NODE_ENV === "production") {
+    if (process.env.PORT) return Number(process.env.PORT);
+    if (process.env.API_PORT) {
+      console.warn(
+        "[config] NODE_ENV=production but PORT is unset — using API_PORT. " +
+          "On Plesk, remove API_PORT from .env and use Dashboard → Restart App."
+      );
+      return Number(process.env.API_PORT);
+    }
+  }
+  return Number(process.env.PORT || process.env.API_PORT) || 3010;
+})();
 export const JWT_SECRET =
   process.env.JWT_SECRET?.trim() || "dev-jwt-secret-change-me";
 export const DEFAULT_DATABASE =
