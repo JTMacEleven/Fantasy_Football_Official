@@ -1,0 +1,61 @@
+{
+  "expo": {
+    "name": "AfroAngel Fantasy Football",
+    "slug": "afroangel-fantacy-football",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/images/icon.png",
+    "scheme": "afroangelfantacyfootball",
+    "userInterfaceStyle": "dark",
+    "ios": {
+      "icon": "./assets/expo.icon",
+      "bundleIdentifier": "com.afroangel.fantasyfootball",
+      "supportsTablet": true
+    },
+    "android": {
+      "package": "com.afroangel.fantasyfootball",
+      "adaptiveIcon": {
+        "backgroundColor": "#000000",
+        "foregroundImage": "./assets/images/android-icon-foreground.png",
+        "backgroundImage": "./assets/images/android-icon-background.png",
+        "monochromeImage": "./assets/images/android-icon-monochrome.png"
+      },
+      "predictiveBackGestureEnabled": false,
+      "usesCleartextTraffic": true
+    },
+    "web": {
+      "output": "static",
+      "favicon": "./assets/images/favicon.png"
+    },
+    "plugins": [
+      "expo-dev-client",
+      "expo-router",
+      [
+        "expo-splash-screen",
+        {
+          "backgroundColor": "#000000",
+          "android": {
+            "image": "./assets/images/afroangel-logo.jpg",
+            "imageWidth": 200
+          },
+          "ios": {
+            "image": "./assets/images/afroangel-logo.jpg",
+            "imageWidth": 200
+          }
+        }
+      ],
+      "expo-secure-store"
+    ],
+    "experiments": {
+      "typedRoutes": true,
+      "reactCompiler": true
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "400b09eb-2bbb-4ef8-97f1-f8e43f756248"
+      }
+    },
+    "owner": "afroangel"
+  }
+}
