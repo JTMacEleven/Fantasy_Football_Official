@@ -55,7 +55,9 @@
     "api:tunnel": "cloudflared tunnel --url http://localhost:3010",
     "api:tunnel:lt": "npx localtunnel --port 3010",
     "db:migrate": "node db/migrate.js",
+    "db:migrate:production": "node db/migrate.js --production",
     "db:migrate:status": "node db/migrate.js --status",
+    "db:migrate:status:production": "node db/migrate.js --status --production",
     "build:dev:android": "npx eas-cli build --profile development --platform android",
     "build:dev:ios": "npx eas-cli build --profile development --platform ios",
     "lint": "expo lint"

@@ -3,9 +3,16 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-dotenv.config({ path: path.join(__dirname, "..", "..", ".env") });
+const envCandidates = [
+  path.join(__dirname, "..", "..", ".env"), // repo root (full deploy)
+  path.join(__dirname, "..", ".env"), // api/.env (api-only deploy)
+];
+for (const envPath of envCandidates) {
+  dotenv.config({ path: envPath });
+}
+dotenv.config(); // fallback: process.cwd()/.env (Plesk app root)
 
-export const API_PORT = Number(process.env.API_PORT) || 3010;
+export const API_PORT = Number(process.env.PORT || process.env.API_PORT) || 3010;
 export const JWT_SECRET =
   process.env.JWT_SECRET?.trim() || "dev-jwt-secret-change-me";
 export const DEFAULT_DATABASE =

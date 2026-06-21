@@ -13,7 +13,13 @@ const ROOT_DIR = path.join(__dirname, "..");
 const MIGRATIONS_DIR = path.join(__dirname, "migrations");
 const DEFAULT_DATABASE = "AfroAngelFantasyFootball";
 
-dotenv.config({ path: path.join(ROOT_DIR, ".env") });
+const envFile = process.argv.includes("--production")
+  ? ".env.production"
+  : ".env";
+
+for (const base of [ROOT_DIR, path.join(ROOT_DIR, "api")]) {
+  dotenv.config({ path: path.join(base, envFile) });
+}
 
 function loadDbConfig() {
   const server = process.env.MSSQL_SERVER?.trim();
