@@ -23,6 +23,10 @@ export const API_PORT = (() => {
       );
       return Number(process.env.API_PORT);
     }
+    console.warn(
+      "[config] NODE_ENV=production but PORT is unset — falling back to 3010. " +
+        "Set PORT in Plesk Node.js env or enable Node.js proxy."
+    );
   }
   return Number(process.env.PORT || process.env.API_PORT) || 3010;
 })();
