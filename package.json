@@ -3,7 +3,14 @@
   "main": "expo-router/entry",
   "version": "1.0.0",
   "dependencies": {
+    "@fastify/cors": "^10.0.2",
     "@expo-google-fonts/orbitron": "^0.4.2",
+    "bcryptjs": "^3.0.3",
+    "dotenv": "^16.6.1",
+    "fastify": "^5.2.1",
+    "fastify-plugin": "^5.0.1",
+    "jsonwebtoken": "^9.0.2",
+    "mssql": "^11.0.1",
     "@expo/ui": "~56.0.18",
     "@react-native-async-storage/async-storage": "2.2.0",
     "expo": "~56.0.12",
@@ -33,9 +40,7 @@
   },
   "devDependencies": {
     "@types/react": "~19.2.2",
-    "dotenv": "^16.6.1",
     "eas-cli": "^20.3.0",
-    "mssql": "^11.0.1",
     "typescript": "~6.0.3"
   },
   "scripts": {
