@@ -12,24 +12,29 @@ for (const envPath of envCandidates) {
 }
 dotenv.config(); // fallback: process.cwd()/.env (Plesk app root)
 
-/** Plesk sets PORT in production — never hard-code 3010 on the server. */
-export const API_PORT = (() => {
-  if (process.env.NODE_ENV === "production") {
-    if (process.env.PORT) return Number(process.env.PORT);
-    if (process.env.API_PORT) {
-      console.warn(
-        "[config] NODE_ENV=production but PORT is unset — using API_PORT. " +
-          "On Plesk, remove API_PORT from .env and use Dashboard → Restart App."
-      );
-      return Number(process.env.API_PORT);
-    }
-    console.warn(
-      "[config] NODE_ENV=production but PORT is unset — falling back to 3010. " +
-        "Set PORT in Plesk Node.js env or enable Node.js proxy."
-    );
+/**
+ * iisnode on Windows sets PORT to a named pipe (e.g. \\.\pipe\...), not a number.
+ * Coercing with Number() yields NaN and crashes listen(). Pass pipe paths through as-is.
+ */
+export function resolveListenOptions() {
+  const raw = String(process.env.PORT ?? process.env.API_PORT ?? "3010").trim();
+
+  if (raw.includes("pipe")) {
+    console.error("[config] Using iisnode pipe:", raw);
+    return { port: raw };
   }
-  return Number(process.env.PORT || process.env.API_PORT) || 3010;
-})();
+
+  const port = Number(raw);
+  if (!Number.isFinite(port)) {
+    console.error("[config] Invalid PORT — falling back to 3010:", raw);
+    return { port: 3010, host: "0.0.0.0" };
+  }
+
+  return { port, host: "0.0.0.0" };
+}
+
+/** @deprecated use resolveListenOptions() */
+export const API_PORT = resolveListenOptions().port;
 export const JWT_SECRET =
   process.env.JWT_SECRET?.trim() || "dev-jwt-secret-change-me";
 export const DEFAULT_DATABASE =
