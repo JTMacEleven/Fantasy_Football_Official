@@ -21,7 +21,7 @@ export function resolveListenOptions() {
 
   if (raw.includes("pipe")) {
     console.error("[config] Using iisnode pipe:", raw);
-    return { port: raw };
+    return { path: raw };
   }
 
   const port = Number(raw);
@@ -33,8 +33,6 @@ export function resolveListenOptions() {
   return { port, host: "0.0.0.0" };
 }
 
-/** @deprecated use resolveListenOptions() */
-export const API_PORT = resolveListenOptions().port;
 export const JWT_SECRET =
   process.env.JWT_SECRET?.trim() || "dev-jwt-secret-change-me";
 export const DEFAULT_DATABASE =
